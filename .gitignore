@@ -1,0 +1,14 @@
+# 依赖（本插件零依赖，留作通用防护）
+node_modules/
+
+# 审计账本属于运行期数据，不进版本库
+audit*.jsonl
+audit*.jsonl.1
+
+# 测试临时目录（CI 上落在仓库根目录）
+capability-policy-test-*/
+
+# 杂项
+*.log
+.DS_Store
+Thumbs.db

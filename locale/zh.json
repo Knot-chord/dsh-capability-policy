@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "能力归属与调度闸门",
+    "description": "常驻一段提示词，按动手面把自动化工具分为 app/page/native/pixel/system 五类，外加只读的 capture；同一资源同一回合只允许一个动手类，只读取证不占目标，冲突转为询问，失败可降级，每次拦放都进 JSONL 审计。"
+  }
+}

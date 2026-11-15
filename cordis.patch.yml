@@ -1,0 +1,3 @@
+- insert:
+    - id: capability-policy
+      name: '@local/dsh-capability-policy'

@@ -1,0 +1,36 @@
+{
+  "_note": "Rules for @local/dsh-capability-policy. Reload the profile after editing. deny/ask entries: tool and args are JavaScript regular expressions; args matches JSON.stringify(arguments). 任何一处写错都会让插件拒绝启动并在插件面板报错，不会静默放行。claims.conflict=ask 依赖审批应答者；本机审批关闭时建议用 deny（理由更清楚）或 allow（只记账）。",
+  "_examples": {
+    "deny": [{ "tool": "^memory_remember$", "args": "\"auto\":true", "reason": "后台自动写记忆已禁用" }],
+    "ask": [{ "tool": "^computer_", "reason": "桌面级操作需要确认" }],
+    "agents": [{ "prefix": "sub-", "allow": ["^read$", "^grep$"], "deny": ["^computer_"] }],
+    "readOnly": [{ "tool": "^my_reader$", "actions": ["probe"] }]
+  },
+  "scope": {
+    "automationOwners": ["app", "page", "native", "pixel", "capture", "system"]
+  },
+  "claims": {
+    "enabled": true,
+    "conflict": "deny",
+    "maxAttempts": 2,
+    "groups": [
+      ["app", "page"],
+      ["app", "native"],
+      ["app", "pixel"],
+      ["page", "native"],
+      ["page", "pixel"],
+      ["native", "pixel"]
+    ],
+    "readOnly": [],
+    "exempt": []
+  },
+  "audit": {
+    "enabled": true,
+    "file": null,
+    "maxBytes": 4194304
+  },
+  "deny": [],
+  "ask": [],
+  "agents": [],
+  "owners": {}
+}

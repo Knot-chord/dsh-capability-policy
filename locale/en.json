@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Capability ownership and dispatch",
+    "description": "Adds one persistent prompt section that sorts automation tools into app/page/native/pixel/system acting classes plus a read-only capture class: one acting class per resource per turn, inspection never claims, conflicts ask the user, failures fall back, and every decision lands in a JSONL audit ledger."
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "@local/dsh-capability-policy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Capability ownership and dispatch gate for DeepSeek Harness: acting classes app/page/native/pixel/system plus a read-only capture class, resource-level claims with read-only bypass, deny/ask rules, agent allowlists, and a rotating JSONL audit ledger.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Knot-chord/dsh-capability-policy.git"
+  },
+  "engines": {
+    "dsh": ">=0.2.1-rc.5 <0.3.0-0",
+    "node": ">=20"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "capability",
+    "dispatch",
+    "automation",
+    "ownership",
+    "policy",
+    "audit"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "scripts": {
+    "test": "node test/policy.test.mjs"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "rules.json",
+    "README.md",
+    "SPEC.md",
+    "LICENSE",
+    "test"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
