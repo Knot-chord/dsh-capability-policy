@@ -1,0 +1,59 @@
+{
+  "_note": "Rules for @local/dsh-capability-policy（调度器）。改完不用重载 profile：watch 打开时约 2 秒内自动重读，并往账本写一行 config-reloaded（写坏则 config-rejected 并继续用上一份好规则）。规则文件优先从 <profile>/capability-policy/rules.json 读取，其次包内这份副本。校验很严：任何一处写错（未知键、坏正则、未知空间、capture 不是 observe）都会让插件拒绝启动并列出问题，不会带着半套规则静默运行。",
+  "_model": {
+    "这是什么": "调度器：仲裁「谁在这一回合可以动哪个资源」，不判断工具是不是自动化工具。",
+    "请求": "每次工具调用是一个请求：目标（窗口 / 文档元素 / 一个点；都没有则无从仲裁）+ 方式（observe 只看 / select 只指过去 / act 真正驱动）。",
+    "空间": "资源按空间归类：app / page / native / pixel / system。空间不是工具分类，是「面在哪」。",
+    "租约": "只有 act 拿租约；每回合每个资源一个驱动者；observe/select 从不占位。",
+    "互斥": "app/page/native/pixel 之间两两互斥——因为它们可能指同一个物理面；system 不是屏幕面，不参与。",
+    "完备性": "说清了目标的请求一定被仲裁；没说清目标的请求记为 unarbitrable（不猜它是什么）。"
+  },
+  "_concepts": {
+    "scope.spaces": "受仲裁的空间；不在列表里的空间不占位也不记账",
+    "capabilities": "声明表：已知请求形状 → 空间 + 方式。用户行排在出厂行之前，写一条同正则的行即可覆盖内置行为。它只负责原语读不出的部分（只读/置前/无目标脚本），不负责覆盖面",
+    "claims.groups": "互斥关系，默认由「哪些空间可能指同一个面」推导；只有新增自定义空间时才需要改",
+    "claims.conflict": "ask 询问 / deny 直接拒绝并说明 / allow 只记账且新请求接管",
+    "claims.maxAttempts": "同一目标本回合被拦或失败几次后不再放行换手（0 = 不限）；用户批准的切换会退还这一次",
+    "watch": "规则文件改动后自动重读；false 则只在加载与重载 profile 时读取",
+    "audit": "账本：startup / allow / deny / ask / claim / release / turn-end / unarbitrable / config-*"
+  },
+  "_examples": {
+    "declare_observe": [
+      { "tool": "^my_reader$", "owner": "capture", "effect": "observe" },
+      { "tool": "^my_tool$", "owner": "page", "cases": [{ "when": { "actions": ["probe"] }, "effect": "observe" }] }
+    ],
+    "declare_override": [
+      { "tool": "^windows$", "owner": "native", "effect": "act", "cases": [{ "when": { "actions": ["focus", "restore"] }, "effect": "act" }] }
+    ],
+    "deny": [{ "tool": "^memory_remember$", "args": "\"auto\":true", "reason": "后台自动写记忆已禁用" }],
+    "ask": [{ "tool": "^computer_", "reason": "桌面级操作需要确认" }],
+    "agents": [{ "prefix": "sub-", "allow": ["^read$", "^grep$"], "deny": ["^computer_"] }]
+  },
+  "scope": {
+    "spaces": ["app", "page", "native", "pixel", "capture", "system"]
+  },
+  "capabilities": [],
+  "claims": {
+    "enabled": true,
+    "conflict": "deny",
+    "maxAttempts": 2,
+    "ttlMinutes": 30,
+    "groups": [
+      ["app", "page"],
+      ["app", "native"],
+      ["app", "pixel"],
+      ["page", "native"],
+      ["page", "pixel"],
+      ["native", "pixel"]
+    ]
+  },
+  "audit": {
+    "enabled": true,
+    "file": null,
+    "maxBytes": 4194304
+  },
+  "watch": true,
+  "deny": [],
+  "ask": [],
+  "agents": []
+}

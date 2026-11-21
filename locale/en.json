@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Capability ownership and dispatch",
+    "description": "Adds one persistent prompt section plus one gate over automation tools: a declarative table maps every (tool, action) to an acting class and an effect — observe, select or act — and only acting calls take ownership of a surface. One owner per surface per turn, takeovers are explicit and audited, read-only inspection and foregrounding never claim, failures free the surface for the fallback, and a per-target retry budget stops class-hopping."
+  }
+}

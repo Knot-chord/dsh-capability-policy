@@ -1,0 +1,57 @@
+{
+  "name": "@local/dsh-capability-policy",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A dispatcher for DeepSeek Harness: every tool call is read as a request for a surface (window handle, page element, screen point), one driver per surface per turn, read-only inspection and foregrounding never take the lease, handovers are explicit and audited, and a per-target retry budget stops handover-hopping. Zero dependencies.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Knot-chord/dsh-capability-policy.git"
+  },
+  "engines": {
+    "dsh": ">=0.2.1-rc.5 <0.3.0-0",
+    "node": ">=20"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "capability",
+    "dispatch",
+    "automation",
+    "ownership",
+    "policy",
+    "audit",
+    "scheduler",
+    "surface",
+    "dispatcher",
+    "lease"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./lib/*": "./lib/*",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "scripts": {
+    "test": "node test/policy.test.mjs"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "rules.json",
+    "README.md",
+    "SPEC.md",
+    "LICENSE",
+    "test"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
